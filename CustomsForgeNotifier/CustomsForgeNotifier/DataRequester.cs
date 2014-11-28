@@ -115,7 +115,7 @@ namespace CustomsForgeNotifier
                 this.ArtistName = data[1];
                 this.SongName = data[2];
                 this.Album = data[3];
-                this.Tuning = (Tunings)Enum.Parse(typeof(Tunings), data[4]);
+                this.Tuning = GetTuning(data[4]);
                 this.AvailableParts = GetParts(data[5]);
                 this.HasDynamicDifficulty = !string.Equals("no", data[6], StringComparison.OrdinalIgnoreCase);
                 this.AvailablePlatforms = GetPlatforms(data[7]);
@@ -137,6 +137,50 @@ namespace CustomsForgeNotifier
             /// Epoch time, used to convert time retrieved from the web service
             /// </summary>
             private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+
+
+            private static Tunings GetTuning(string text)
+            {
+                switch (text)
+                {
+                    case "fsharpstandard": return Tunings.FSharpStandard;
+                    case "fstandardhigh": return Tunings.FStandardHigh;
+                    case "estandard": return Tunings.EStandard;
+                    case "edropd": return Tunings.EDropD;
+                    case "eflatstandard": return Tunings.EFlatStandard;
+                    case "eflatdropdflat": return Tunings.EFlatDropDFlat;
+                    case "dstandard": return Tunings.DStandard;
+                    case "ddropc": return Tunings.DDropC;
+                    case "csharpstandard": return Tunings.CSharpStandard;
+                    case "csharpdropb": return Tunings.CSharpDropB;
+                    case "cstandard": return Tunings.CStandard;
+                    case "cdropbflat": return Tunings.CDropBFlat;
+                    case "bstandard": return Tunings.BStandard;
+                    case "bflatstandard": return Tunings.BFlatStandard;
+                    case "bflatdropaflat": return Tunings.BFlatDropAFlat;
+                    case "bdropa": return Tunings.BDropA;
+                    case "astandard": return Tunings.AStandard;
+                    case "aflatstandard": return Tunings.AFlatStandard;
+                    case "gstandard": return Tunings.GStandard;
+                    case "gflatstandard": return Tunings.GFlatStandard;
+                    case "fstandard": return Tunings.FStandard;
+                    case "octavestandard": return Tunings.OctaveStandard;
+                    case "opena": return Tunings.OpenA;
+                    case "openb": return Tunings.OpenB;
+                    case "openc": return Tunings.OpenC;
+                    case "opend": return Tunings.OpenD;
+                    case "opene": return Tunings.OpenE;
+                    case "openf": return Tunings.OpenF;
+                    case "openg": return Tunings.OpenG;
+                    case "celtic": return Tunings.Celtic;
+
+                    case "other":
+                    default:
+                        return Tunings.Other;
+                }
+            }
+
 
             private static InstrumentInfo GetInstrumentInfo(string text)
             {
