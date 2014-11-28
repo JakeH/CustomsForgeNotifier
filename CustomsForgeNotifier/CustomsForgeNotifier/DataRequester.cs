@@ -119,24 +119,79 @@ namespace CustomsForgeNotifier
                 this.AvailableParts = GetParts(data[5]);
                 this.HasDynamicDifficulty = !string.Equals("no", data[6], StringComparison.OrdinalIgnoreCase);
                 this.AvailablePlatforms = GetPlatforms(data[7]);
-                //Rating = 8
+                //Rating = 8 --Not sure what purpose this serves
                 this.AddedAt = Epoch.AddSeconds(long.Parse(data[9]));
                 this.UpdatedAt = Epoch.AddSeconds(long.Parse(data[10]));
                 this.Version = data[11];
-                //Member = 12
+                this.CreatedByUser = data[12];
                 this.DownloadCount = int.Parse(data[13]);
                 this.Furl = data[14];
                 this.Id = int.Parse(data[15]);
                 this.IsOfficial = !string.Equals("no", data[16], StringComparison.OrdinalIgnoreCase);
                 this.Direct = data[17];
-                // YouTube link = 18
-                // InstrumentInfo = 19
+                this.YouTubeUri = string.IsNullOrWhiteSpace(data[18]) ? null : new Uri(data[18]);
+                this.InstrumentInfo = GetInstrumentInfo(data[19]);
             }
 
             /// <summary>
             /// Epoch time, used to convert time retrieved from the web service
             /// </summary>
             private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+            private static InstrumentInfo GetInstrumentInfo(string text)
+            {
+                InstrumentInfo ret = InstrumentInfo.None;
+
+                foreach (string s in text.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    switch (s.Trim().ToLowerInvariant())
+                    {
+                        case "ii_capolead":
+                            ret |= InstrumentInfo.CapoLead;
+                            break;
+
+                        case "ii_caporhythm":
+                            ret |= InstrumentInfo.CapoRhythm;
+                            break;
+
+                        case "ii_slidelead":
+                            ret |= InstrumentInfo.SlideLead;
+                            break;
+
+                        case "ii_sliderhythm":
+                            ret |= InstrumentInfo.SlideRhythm;
+                            break;
+
+                        case "ii_5stringbass":
+                            ret |= InstrumentInfo.FiveStringBass;
+                            break;
+
+                        case "ii_6stringbass":
+                            ret |= InstrumentInfo.SixStringBass;
+                            break;
+
+                        case "ii_7stringguitar":
+                            ret |= InstrumentInfo.SevenStringGuitar;
+                            break;
+
+                        case "ii_12stringguitar":
+                            ret |= InstrumentInfo.TwelveStringGuitar;
+                            break;
+
+                        case "ii_heavystrings":
+                            ret |= InstrumentInfo.HeavyStrings;
+                            break;
+
+                        case "ii_tremolo":
+                            ret |= InstrumentInfo.Tremolo;
+                            break;
+
+                    }
+                }
+
+                return ret;
+            }
+
 
             /// <summary>
             /// Converts a text list of parts into the typed enum

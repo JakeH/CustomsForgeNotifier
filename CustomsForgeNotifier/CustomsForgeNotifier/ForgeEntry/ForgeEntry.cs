@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace CustomsForgeNotifier
 {
@@ -78,6 +80,22 @@ namespace CustomsForgeNotifier
         public bool IsOfficial { get; protected set; }
 
         /// <summary>
+        /// Link to YouTube video
+        /// </summary>
+        public Uri YouTubeUri { get; protected set; }
+
+        /// <summary>
+        /// Name of the user who created this entry
+        /// </summary>
+        public string CreatedByUser { get; protected set; }
+
+        /// <summary>
+        /// Special instrument requirements
+        /// </summary>
+        public InstrumentInfo InstrumentInfo { get; protected set; }
+
+
+        /// <summary>
         /// Unknown
         /// </summary>
         protected string Direct;
@@ -114,5 +132,94 @@ namespace CustomsForgeNotifier
                 return new Uri(string.Format("http://customsforge.com/process.php?id={0}", this.Id));
             }
         }
+
+
+
+        /// <summary>
+        /// Returns the explanation of the tuning
+        /// </summary>
+        /// <returns></returns>
+        public string TuningExplained()
+        {
+            switch (this.Tuning)
+            {
+                case Tunings.FSharpStandard: return "F# Standard (High)";
+                case Tunings.FStandardHigh: return "F Standard (High)";
+                case Tunings.EStandard: return "E Standard";
+                case Tunings.EDropD: return "Drop D";
+                case Tunings.EFlatStandard: return "Eb Standard";
+                case Tunings.EFlatDropDFlat: return "Eb Drop Db";
+                case Tunings.DStandard: return "D Standard";
+                case Tunings.DDropC: return "D Drop C";
+                case Tunings.CSharpStandard: return "C# Standard";
+                case Tunings.CSharpDropB: return "C# Drop B";
+                case Tunings.CStandard: return "C Standard";
+                case Tunings.CDropBFlat: return "C Drop Bb";
+                case Tunings.BStandard: return "B Standard";
+                case Tunings.BFlatStandard: return "Bb Standard";
+                case Tunings.BFlatDropAFlat: return "Bb Drop Ab";
+                case Tunings.BDropA: return "B Drop A";
+                case Tunings.AStandard: return "A Standard";
+                case Tunings.AFlatStandard: return "Ab Standard";
+                case Tunings.GStandard: return "G Standard";
+                case Tunings.GFlatStandard: return "Gb Standard (Low)";
+                case Tunings.FStandard: return "F Standard (Low)";
+                case Tunings.OctaveStandard: return "Octave (drop 1 octave)";
+                case Tunings.OpenA: return "Open A";
+                case Tunings.OpenB: return "Open B";
+                case Tunings.OpenC: return "Open C";
+                case Tunings.OpenD: return "Open D";
+                case Tunings.OpenE: return "Open E";
+                case Tunings.OpenF: return "Open F";
+                case Tunings.OpenG: return "Open G";
+                case Tunings.Celtic: return "Celtic (D A D G A D)";
+                case Tunings.Other:
+                default: return "Other";
+            }
+        }
+
+        /// <summary>
+        /// Returns explanation 
+        /// </summary>
+        /// <returns></returns>
+        public List<string> InstrumentInfoExplained()
+        {
+            List<string> ret = new List<string>();
+
+            if (this.InstrumentInfo.HasFlag(InstrumentInfo.CapoLead))
+                ret.Add("Capo on Lead guitar required");
+
+            if (this.InstrumentInfo.HasFlag(InstrumentInfo.CapoRhythm))
+                ret.Add("Capo on Rhythm guitar required");
+
+            if (this.InstrumentInfo.HasFlag(InstrumentInfo.SlideLead))
+                ret.Add("Slide on Lead guitar required");
+
+            if (this.InstrumentInfo.HasFlag(InstrumentInfo.SlideRhythm))
+                ret.Add("Slide on Rhythm guitar required");
+
+            if (this.InstrumentInfo.HasFlag(InstrumentInfo.FiveStringBass))
+                ret.Add("5-string bass guitar required");
+
+            if (this.InstrumentInfo.HasFlag(InstrumentInfo.SixStringBass))
+                ret.Add("6-string bass guitar required");
+
+            if (this.InstrumentInfo.HasFlag(InstrumentInfo.SevenStringGuitar))
+                ret.Add("7-string guitar required");
+
+            if (this.InstrumentInfo.HasFlag(InstrumentInfo.TwelveStringGuitar))
+                ret.Add("12-string guitar required");
+
+            if (this.InstrumentInfo.HasFlag(InstrumentInfo.HeavyStrings))
+                ret.Add("Heavy-gauge strings recommended");
+
+            if (this.InstrumentInfo.HasFlag(InstrumentInfo.Tremolo))
+                ret.Add("Tremolo recommended");
+
+            return ret;
+
+        }
+
+
     }
 }

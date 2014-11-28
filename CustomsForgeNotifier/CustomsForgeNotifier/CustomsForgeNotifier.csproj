@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommandLine">
+      <HintPath>..\packages\CommandLineParser.1.9.71\lib\net45\CommandLine.dll</HintPath>
+    </Reference>
     <Reference Include="DuoVia.FuzzyStrings">
       <HintPath>..\packages\DuoVia.FuzzyStrings.1.0.1\lib\net40\DuoVia.FuzzyStrings.dll</HintPath>
     </Reference>
@@ -50,8 +53,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandLineOptions.cs" />
     <Compile Include="DataRequester.cs" />
     <Compile Include="ForgeEntry\ForgeEntry.cs" />
+    <Compile Include="ForgeEntry\IntrumentInfo.cs" />
     <Compile Include="ForgeEntry\Parts.cs" />
     <Compile Include="ForgeEntry\Platforms.cs" />
     <Compile Include="LogHelper.cs" />

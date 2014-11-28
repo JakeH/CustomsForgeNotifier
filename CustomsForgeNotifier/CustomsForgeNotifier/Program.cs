@@ -31,6 +31,17 @@ namespace CustomsForgeNotifier
 
         private static void Main(string[] args)
         {
+            var options = new CommandLineOptions();
+            if (CommandLine.Parser.Default.ParseArguments(args, options))
+            {
+                if (options.ResetLastUpdate)
+                {
+                    Settings.Default.LastEntryUpdated = DateTime.MinValue;
+                    Settings.Default.Save();
+                }
+
+            }
+
             PerformTasks();
         }
 
@@ -38,16 +49,26 @@ namespace CustomsForgeNotifier
         {
             DateTime newLastUpdated = DateTime.MinValue;
             DateTime lastUpdated = Settings.Default.LastEntryUpdated;
+            int processedEntryCount = 0;
 
             Logger.InfoFormat("Starting with last updated of '{0}'", lastUpdated);
 
+            FileInfo artistsFile = new FileInfo("ArtistsToMatch.txt");
+            if (!artistsFile.Exists)
+            {
+                Logger.ErrorFormat("Cannot find an 'artists to match' file at: '{0}'", artistsFile.FullName);
+                return;
+            }
+
             //TODO: upgrade this poor man's database.
-            List<string> ArtistsToMatch = new List<string>(File.ReadAllLines("ArtistsToMatch.txt"));
+            List<string> ArtistsToMatch = new List<string>(File.ReadAllLines(artistsFile.FullName, Encoding.UTF8));
 
             Queue<ForgeEntry> MatchesToNotify = new Queue<ForgeEntry>();
 
             foreach (var entry in DataRequester.GetForgeEntries(lastUpdated, Settings.Default.AbsoluteRetrievalLimit))
             {
+                processedEntryCount++;
+
                 // update the lastest time, which we will save in the settings file
                 newLastUpdated = (entry.UpdatedAt > newLastUpdated) ? entry.UpdatedAt : newLastUpdated;
 
@@ -70,10 +91,11 @@ namespace CustomsForgeNotifier
             Settings.Default.LastEntryUpdated = newLastUpdated;
             Settings.Default.Save();
 
+            Logger.InfoFormat("Processed {0} entries, matching {1}", processedEntryCount, MatchesToNotify.Count);
+
             if (Notifier != null)
             {
                 // process notifications
-
                 while (MatchesToNotify.Count > 0)
                 {
                     ForgeEntry match = MatchesToNotify.Dequeue();
