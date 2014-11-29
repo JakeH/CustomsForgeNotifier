@@ -53,6 +53,10 @@ Pushbullet page https://www.pushbullet.com/account
 
 Pushbullet API Uri. Should not need to be changed from the default.
 
+##### DeviceIden
+
+Specific device to push to. Use the Pushbullet site to see your device identifiers.
+
 ## Scheduled Task
 
 A very easy way to get this to run is to use Window's Task Scheduler. 
