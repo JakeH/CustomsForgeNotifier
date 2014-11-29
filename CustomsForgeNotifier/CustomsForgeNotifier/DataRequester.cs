@@ -47,7 +47,8 @@ namespace CustomsForgeNotifier
 
                 try
                 {
-                    response = GetRemoteData(GetUri(retrievedCount, 25));
+                    // honor the retrievalLimit parameter in case it's less than 25
+                    response = GetRemoteData(GetUri(retrievedCount, Math.Min(25, retrievalLimit)));
                 }
                 catch (Exception ex)
                 {
