@@ -53,10 +53,9 @@ namespace CustomsForgeNotifier
                 return;
             }
 
-            //TODO: upgrade this poor man's database.
-            List<string> ArtistsToMatch = new List<string>(File.ReadAllLines(artistsFile.FullName, Encoding.UTF8));
+            List<string> artistsToMatch = new List<string>(File.ReadAllLines(artistsFile.FullName, Encoding.UTF8));
 
-            Queue<ForgeEntry> MatchesToNotify = new Queue<ForgeEntry>();
+            Queue<ForgeEntry> matchesToNotify = new Queue<ForgeEntry>();
 
             foreach (var entry in DataRequester.GetForgeEntries(lastUpdated, Settings.AbsoluteRetrievalLimit))
             {
@@ -66,12 +65,12 @@ namespace CustomsForgeNotifier
                 if (entry.UpdatedAt > newLastUpdated)
                     newLastUpdated = entry.UpdatedAt;
 
-                foreach (string artist in ArtistsToMatch)
+                foreach (string artist in artistsToMatch)
                 {
                     // seems a coefficient of 0.95 or greater does a good job at catching simple errors
                     if (artist.DiceCoefficient(entry.SortArtistName) >= 0.95)
                     {
-                        MatchesToNotify.Enqueue(entry);
+                        matchesToNotify.Enqueue(entry);
 
                         Logger.InfoFormat("Matched entry '{0}' with watched artist '{1}'",
                             entry.SortArtistName, artist);
@@ -85,14 +84,14 @@ namespace CustomsForgeNotifier
             if (newLastUpdated > Settings.LastEntryUpdated)
                 Settings.LastEntryUpdated = newLastUpdated;
 
-            Logger.InfoFormat("Processed {0} entries, matching {1}", processedEntryCount, MatchesToNotify.Count);
+            Logger.InfoFormat("Processed {0} entries, matching {1}", processedEntryCount, matchesToNotify.Count);
 
             if (Notifier != null)
             {
                 // process notifications
-                while (MatchesToNotify.Count > 0)
+                while (matchesToNotify.Count > 0)
                 {
-                    ForgeEntry match = MatchesToNotify.Dequeue();
+                    ForgeEntry match = matchesToNotify.Dequeue();
 
                     StringBuilder message = new StringBuilder();
 
