@@ -63,7 +63,8 @@ namespace CustomsForgeNotifier
                 processedEntryCount++;
 
                 // update the lastest time, which we will save in the settings file
-                newLastUpdated = (entry.UpdatedAt > newLastUpdated) ? entry.UpdatedAt : newLastUpdated;
+                if (entry.UpdatedAt > newLastUpdated)
+                    newLastUpdated = entry.UpdatedAt;
 
                 foreach (string artist in ArtistsToMatch)
                 {
@@ -81,7 +82,8 @@ namespace CustomsForgeNotifier
             }
 
             // save the new last entry updated date
-            Settings.LastEntryUpdated = newLastUpdated;
+            if (newLastUpdated > Settings.LastEntryUpdated)
+                Settings.LastEntryUpdated = newLastUpdated;
 
             Logger.InfoFormat("Processed {0} entries, matching {1}", processedEntryCount, MatchesToNotify.Count);
 
