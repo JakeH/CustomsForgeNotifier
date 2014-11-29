@@ -15,8 +15,9 @@ namespace CustomsForgeNotifier
 
         private readonly string APIToken;
         private readonly string APIUri;
+        private readonly string DeviceIden;
 
-        public PushbulletNotifier(string apiToken, string apiUri)
+        public PushbulletNotifier(string apiToken, string apiUri, string deviceIden)
         {
             if (string.IsNullOrWhiteSpace(apiToken))
                 throw new ArgumentNullException("apiToken");
@@ -26,6 +27,7 @@ namespace CustomsForgeNotifier
 
             this.APIToken = apiToken;
             this.APIUri = apiUri;
+            this.DeviceIden = deviceIden;
         }
 
         public void Notify(string title, string message)
@@ -34,7 +36,8 @@ namespace CustomsForgeNotifier
             {
                 type = "note",
                 title = title,
-                body = message
+                body = message,
+                device_iden = this.DeviceIden
             };
 
             string jsonString = JsonConvert.SerializeObject(json);

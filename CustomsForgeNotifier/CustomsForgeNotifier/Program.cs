@@ -27,7 +27,8 @@ namespace CustomsForgeNotifier
                     case "pushbullet":
                         Notifier = new PushbulletNotifier(
                             Settings.Pushbullet.APIToken,
-                            Settings.Pushbullet.APIUri);
+                            Settings.Pushbullet.APIUri,
+                            Settings.Pushbullet.DeviceIden);
                         break;
                 }
             }

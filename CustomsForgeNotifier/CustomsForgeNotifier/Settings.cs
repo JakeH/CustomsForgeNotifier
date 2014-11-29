@@ -48,10 +48,13 @@ namespace CustomsForgeNotifier
 
             AppConfig = ConfigSource.Configs["App"];
 
+            var pushConfig = ConfigSource.Configs["Pushbullet"];
+
             Pushbullet = new PushbulletSettings
             {
-                APIUri = ConfigSource.Configs["Pushbullet"].GetString("APIUri"),
-                APIToken = ConfigSource.Configs["Pushbullet"].GetString("APIToken")
+                APIUri = pushConfig.GetString("APIUri"),
+                APIToken = pushConfig.GetString("APIToken"),
+                DeviceIden = pushConfig.GetString("DeviceIden")
             };
 
             Notifier = AppConfig.GetString("Notifier");
@@ -63,5 +66,6 @@ namespace CustomsForgeNotifier
     {
         public string APIUri;
         public string APIToken;
+        public string DeviceIden;
     }
 }
