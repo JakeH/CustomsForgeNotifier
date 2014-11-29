@@ -50,7 +50,7 @@ namespace CustomsForgeNotifier
 
             Pushbullet = new PushbulletSettings
             {
-                APIUrl = ConfigSource.Configs["Pushbullet"].GetString("APIUri"),
+                APIUri = ConfigSource.Configs["Pushbullet"].GetString("APIUri"),
                 APIToken = ConfigSource.Configs["Pushbullet"].GetString("APIToken")
             };
 
@@ -61,7 +61,7 @@ namespace CustomsForgeNotifier
 
     public struct PushbulletSettings
     {
-        public string APIUrl;
+        public string APIUri;
         public string APIToken;
     }
 }
