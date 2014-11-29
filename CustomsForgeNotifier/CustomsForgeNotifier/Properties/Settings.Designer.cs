@@ -22,52 +22,5 @@ namespace CustomsForgeNotifier.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.DateTime LastEntryUpdated {
-            get {
-                return ((global::System.DateTime)(this["LastEntryUpdated"]));
-            }
-            set {
-                this["LastEntryUpdated"] = value;
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://api.pushbullet.com/v2/pushes")]
-        public string PushbulletAPIUri {
-            get {
-                return ((string)(this["PushbulletAPIUri"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PushbulletAPIToken {
-            get {
-                return ((string)(this["PushbulletAPIToken"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("150")]
-        public int AbsoluteRetrievalLimit {
-            get {
-                return ((int)(this["AbsoluteRetrievalLimit"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Notifier {
-            get {
-                return ((string)(this["Notifier"]));
-            }
-        }
     }
 }

@@ -23,7 +23,7 @@ namespace CustomsForgeNotifier
 
             if (string.IsNullOrWhiteSpace(apiUri))
                 throw new ArgumentNullException("apiUri");
-            
+
             this.APIToken = apiToken;
             this.APIUri = apiUri;
         }

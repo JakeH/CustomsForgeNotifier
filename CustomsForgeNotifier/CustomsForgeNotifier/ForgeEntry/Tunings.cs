@@ -1,5 +1,8 @@
 ﻿namespace CustomsForgeNotifier
 {
+    /// <summary>
+    /// Tunings available for entries to utilize
+    /// </summary>
     public enum Tunings
     {
         FSharpStandard,

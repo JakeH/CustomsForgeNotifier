@@ -1,5 +1,4 @@
-﻿using CustomsForgeNotifier.Properties;
-using DuoVia.FuzzyStrings;
+﻿using DuoVia.FuzzyStrings;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -21,34 +20,28 @@ namespace CustomsForgeNotifier
                 Logger.Error("Unhandled exception", (e.ExceptionObject as Exception));
             };
 
-            switch (Settings.Default.Notifier.ToLower().Trim())
+            if (!string.IsNullOrWhiteSpace(Settings.Notifier))
             {
-                case "pushbullet":
-                    Notifier = new PushbulletNotifier(Settings.Default.PushbulletAPIToken, Settings.Default.PushbulletAPIUri);
-                    break;
+                switch (Settings.Notifier.ToLower().Trim())
+                {
+                    case "pushbullet":
+                        Notifier = new PushbulletNotifier(
+                            Settings.Pushbullet.APIToken,
+                            Settings.Pushbullet.APIUrl);
+                        break;
+                }
             }
         }
 
         private static void Main(string[] args)
         {
-            var options = new CommandLineOptions();
-            if (CommandLine.Parser.Default.ParseArguments(args, options))
-            {
-                if (options.ResetLastUpdate)
-                {
-                    Settings.Default.LastEntryUpdated = DateTime.MinValue;
-                    Settings.Default.Save();
-                }
-
-            }
-
             PerformTasks();
         }
 
         private static void PerformTasks()
         {
             DateTime newLastUpdated = DateTime.MinValue;
-            DateTime lastUpdated = Settings.Default.LastEntryUpdated;
+            DateTime lastUpdated = Settings.LastEntryUpdated;
             int processedEntryCount = 0;
 
             Logger.InfoFormat("Starting with last updated of '{0}'", lastUpdated);
@@ -65,7 +58,7 @@ namespace CustomsForgeNotifier
 
             Queue<ForgeEntry> MatchesToNotify = new Queue<ForgeEntry>();
 
-            foreach (var entry in DataRequester.GetForgeEntries(lastUpdated, Settings.Default.AbsoluteRetrievalLimit))
+            foreach (var entry in DataRequester.GetForgeEntries(lastUpdated, Settings.AbsoluteRetrievalLimit))
             {
                 processedEntryCount++;
 
@@ -88,8 +81,7 @@ namespace CustomsForgeNotifier
             }
 
             // save the new last entry updated date
-            Settings.Default.LastEntryUpdated = newLastUpdated;
-            Settings.Default.Save();
+            Settings.LastEntryUpdated = newLastUpdated;
 
             Logger.InfoFormat("Processed {0} entries, matching {1}", processedEntryCount, MatchesToNotify.Count);
 
@@ -102,11 +94,17 @@ namespace CustomsForgeNotifier
 
                     StringBuilder message = new StringBuilder();
 
-                    message.AppendFormat("{0} - {1}\n\n", match.ArtistName, match.SongName);
-                    message.AppendFormat("{0}: {1}\n\n", Resources.NotifyStrings.NotifyInfoUri, match.InformationUri);
-                    message.AppendFormat("{0}: {1}", Resources.NotifyStrings.NotifyDownloadUri, match.DownloadUri);
+                    message.AppendFormat("{0}{1} - {2}\n\n",
+                        match.IsOfficial ? "[" + Resources.NotifyStrings.Official + "] " : string.Empty,
+                        match.ArtistName, match.SongName);
 
-                    Notifier.Notify(Resources.NotifyStrings.NotifyTitle, message.ToString());
+                    message.AppendFormat("{0}: {1}\n\n", Resources.NotifyStrings.InfoUri, match.InformationUri);
+
+                    // only include the download link if the release is not official
+                    if (!match.IsOfficial)
+                        message.AppendFormat("{0}: {1}", Resources.NotifyStrings.DownloadUri, match.DownloadUri);
+
+                    Notifier.Notify(Resources.NotifyStrings.Title, message.ToString());
 
                     // rate limit this
                     Thread.Sleep(1000);

@@ -2,6 +2,9 @@
 
 namespace CustomsForgeNotifier
 {
+    /// <summary>
+    /// Special information regarding the instrument requirements for a Rocksmith song
+    /// </summary>
     [Flags]
     public enum InstrumentInfo
     {

@@ -63,27 +63,36 @@ namespace CustomsForgeNotifier.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Download.
         /// </summary>
-        internal static string NotifyDownloadUri {
+        internal static string DownloadUri {
             get {
-                return ResourceManager.GetString("NotifyDownloadUri", resourceCulture);
+                return ResourceManager.GetString("DownloadUri", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Info.
         /// </summary>
-        internal static string NotifyInfoUri {
+        internal static string InfoUri {
             get {
-                return ResourceManager.GetString("NotifyInfoUri", resourceCulture);
+                return ResourceManager.GetString("InfoUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Official.
+        /// </summary>
+        internal static string Official {
+            get {
+                return ResourceManager.GetString("Official", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to New Customs Forge Alert!.
         /// </summary>
-        internal static string NotifyTitle {
+        internal static string Title {
             get {
-                return ResourceManager.GetString("NotifyTitle", resourceCulture);
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
     }

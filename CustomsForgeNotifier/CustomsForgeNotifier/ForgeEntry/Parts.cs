@@ -2,13 +2,16 @@
 
 namespace CustomsForgeNotifier
 {
+    /// <summary>
+    /// Song parts which are available in a Rocksmith song
+    /// </summary>
     [Flags]
     public enum Parts
     {
         None = 0,
-        LeadGuitar = 1,
-        RhythmGuitar = 2,
-        BassGuitar = 4,
-        Lyrics = 8
+        LeadGuitar,
+        RhythmGuitar,
+        BassGuitar,
+        Lyrics
     }
 }

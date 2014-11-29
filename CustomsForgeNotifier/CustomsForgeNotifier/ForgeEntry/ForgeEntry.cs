@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CustomsForgeNotifier
 {
@@ -12,98 +11,97 @@ namespace CustomsForgeNotifier
         /// <summary>
         /// Id of the entry
         /// </summary>
-        public int Id { get; protected set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Artist name, in a format suitable for sorting
         /// </summary>
-        public string SortArtistName { get; protected set; }
+        public string SortArtistName { get; set; }
 
         /// <summary>
         /// Artist name
         /// </summary>
-        public string ArtistName { get; protected set; }
+        public string ArtistName { get; set; }
 
         /// <summary>
         /// Song name
         /// </summary>
-        public string SongName { get; protected set; }
+        public string SongName { get; set; }
 
         /// <summary>
         /// Album name
         /// </summary>
-        public string Album { get; protected set; }
+        public string Album { get; set; }
 
         /// <summary>
         /// Tuning of the song
         /// </summary>
-        public Tunings Tuning { get; protected set; }
+        public Tunings Tuning { get; set; }
 
         /// <summary>
         /// Available parts in entry (lead, bass, etc)
         /// </summary>
-        public Parts AvailableParts { get; protected set; }
+        public Parts AvailableParts { get; set; }
 
         /// <summary>
         /// Available platforms this entry is compatible with (PC, Xbox 360, etc)
         /// </summary>
-        public Platforms AvailablePlatforms { get; protected set; }
+        public Platforms AvailablePlatforms { get; set; }
 
         /// <summary>
         /// Dynamic Difficulty is available for this entry
         /// </summary>
-        public bool HasDynamicDifficulty { get; protected set; }
+        public bool HasDynamicDifficulty { get; set; }
 
         /// <summary>
         /// When the entry was originally added to Customs Forge
         /// </summary>
-        public DateTime AddedAt { get; protected set; }
+        public DateTime AddedAt { get; set; }
 
         /// <summary>
         /// When the entry was last updated
         /// </summary>
-        public DateTime UpdatedAt { get; protected set; }
+        public DateTime UpdatedAt { get; set; }
 
         /// <summary>
         /// Version of this entry
         /// </summary>
-        public string Version { get; protected set; }
+        public string Version { get; set; }
 
         /// <summary>
         /// Download count
         /// </summary>
-        public int DownloadCount { get; protected set; }
+        public int DownloadCount { get; set; }
 
         /// <summary>
         /// True if the entry an official (from Rocksmith publisher) entry as opposed to a fan-made entry
         /// </summary>
-        public bool IsOfficial { get; protected set; }
+        public bool IsOfficial { get; set; }
 
         /// <summary>
         /// Link to YouTube video
         /// </summary>
-        public Uri YouTubeUri { get; protected set; }
+        public Uri YouTubeUri { get; set; }
 
         /// <summary>
         /// Name of the user who created this entry
         /// </summary>
-        public string CreatedByUser { get; protected set; }
+        public string CreatedByUser { get; set; }
 
         /// <summary>
         /// Special instrument requirements
         /// </summary>
-        public InstrumentInfo InstrumentInfo { get; protected set; }
-
+        public InstrumentInfo InstrumentInfo { get; set; }
 
         /// <summary>
-        /// Unknown
+        /// Direct purchase Uri
         /// </summary>
-        protected string Direct;
+        public string DirectPurchaseUri { get; set; }
 
         /// <summary>
         /// Uri token
         /// </summary>
-        protected string Furl;
+        public string UriToken { get; set; }
 
         /// <summary>
         /// Uri to the Customs Forge information page for this entry
@@ -114,10 +112,10 @@ namespace CustomsForgeNotifier
             {
                 if (this.IsOfficial)
                     return new Uri(string.Format("http://customsforge.com/process.php?id={0}&url={1}",
-                        this.Id, this.Direct));
+                        this.Id, this.DirectPurchaseUri));
                 else
                     return new Uri(string.Format("http://customsforge.com/page/customsforge_rs_2014_cdlc.html/_/pc-enabled-rs-2014-cdlc/{0}-r{1}",
-                        this.Furl, this.Id));
+                        this.UriToken, this.Id));
             }
         }
 
@@ -128,12 +126,12 @@ namespace CustomsForgeNotifier
         {
             get
             {
-                //TODO: probably not necessary when IsOfficial
-                return new Uri(string.Format("http://customsforge.com/process.php?id={0}", this.Id));
+                if (this.IsOfficial)
+                    return this.InformationUri;
+                else
+                    return new Uri(string.Format("http://customsforge.com/process.php?id={0}", this.Id));
             }
         }
-
-
 
         /// <summary>
         /// Returns the explanation of the tuning
@@ -179,7 +177,7 @@ namespace CustomsForgeNotifier
         }
 
         /// <summary>
-        /// Returns explanation 
+        /// Returns explanation
         /// </summary>
         /// <returns></returns>
         public List<string> InstrumentInfoExplained()
@@ -217,9 +215,6 @@ namespace CustomsForgeNotifier
                 ret.Add("Tremolo recommended");
 
             return ret;
-
         }
-
-
     }
 }

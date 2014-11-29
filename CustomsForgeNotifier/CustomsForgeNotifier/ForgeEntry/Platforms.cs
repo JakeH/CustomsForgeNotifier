@@ -2,13 +2,16 @@
 
 namespace CustomsForgeNotifier
 {
+    /// <summary>
+    /// Hardware platforms which Rocksmith runs on
+    /// </summary>
     [Flags]
     public enum Platforms
     {
         None = 0,
-        PC = 1,
-        PS3 = 2,
-        Xbox360 = 4,
-        Mac = 8
+        PC,
+        PS3,
+        Xbox360,
+        Mac
     }
 }

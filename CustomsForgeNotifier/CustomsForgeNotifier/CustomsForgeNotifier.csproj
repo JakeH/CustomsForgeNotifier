@@ -32,9 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommandLine">
-      <HintPath>..\packages\CommandLineParser.1.9.71\lib\net45\CommandLine.dll</HintPath>
-    </Reference>
     <Reference Include="DuoVia.FuzzyStrings">
       <HintPath>..\packages\DuoVia.FuzzyStrings.1.0.1\lib\net40\DuoVia.FuzzyStrings.dll</HintPath>
     </Reference>
@@ -43,6 +40,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Nini">
+      <HintPath>..\packages\Trove.Nini.1.1.0.0\lib\net20\Nini.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,8 +53,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandLineOptions.cs" />
     <Compile Include="DataRequester.cs" />
+    <Compile Include="ForgeEntry\EntryBuilderFromJson.cs" />
     <Compile Include="ForgeEntry\ForgeEntry.cs" />
     <Compile Include="ForgeEntry\IntrumentInfo.cs" />
     <Compile Include="ForgeEntry\Parts.cs" />
@@ -64,17 +64,23 @@
     <Compile Include="Notifiers\PushbulletNotifier.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ForgeEntry\Tunings.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="ForgeEntry\Tunings.cs" />
+    <Compile Include="Resources\NotifyStrings.ja-JP.Designer.cs">
+      <DependentUpon>NotifyStrings.ja-JP.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Resources\NotifyStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>NotifyStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -88,6 +94,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="settings.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="ArtistsToMatch.txt">
@@ -95,6 +104,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\NotifyStrings.ja-JP.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>NotifyStrings.ja-JP.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\NotifyStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>NotifyStrings.Designer.cs</LastGenOutput>

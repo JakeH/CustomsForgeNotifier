@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomsForgeNotifier", "CustomsForgeNotifier\CustomsForgeNotifier.csproj", "{1A6A7791-C849-40C9-BC92-D4CA4FD1DD8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomsForgeNotifierTests", "CustomsForgeNotifierTests\CustomsForgeNotifierTests.csproj", "{E3DFB9F0-DEB3-49B6-B0D8-9318BB060CAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{1A6A7791-C849-40C9-BC92-D4CA4FD1DD8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A6A7791-C849-40C9-BC92-D4CA4FD1DD8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A6A7791-C849-40C9-BC92-D4CA4FD1DD8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3DFB9F0-DEB3-49B6-B0D8-9318BB060CAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3DFB9F0-DEB3-49B6-B0D8-9318BB060CAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3DFB9F0-DEB3-49B6-B0D8-9318BB060CAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3DFB9F0-DEB3-49B6-B0D8-9318BB060CAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
